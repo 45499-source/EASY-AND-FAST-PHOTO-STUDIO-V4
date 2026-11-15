@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: easy-and-fast-photo-studio
+    runtime: docker
+    plan: standard
+    region: singapore
+    healthCheckPath: /health
+    autoDeploy: true
+    maxShutdownDelaySeconds: 300
+    disk:
+      name: ai-model-cache
+      mountPath: /var/data
+      sizeGB: 10
+    envVars:
+      - key: HF_HOME
+        value: /var/data/huggingface
+      - key: U2NET_HOME
+        value: /var/data/u2net
+      - key: PYTHONUNBUFFERED
+        value: "1"

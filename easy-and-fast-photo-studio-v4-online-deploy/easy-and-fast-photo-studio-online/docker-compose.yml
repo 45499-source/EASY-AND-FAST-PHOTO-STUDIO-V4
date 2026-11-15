@@ -1,0 +1,13 @@
+services:
+  photo-studio:
+    build: .
+    ports:
+      - "10000:10000"
+    environment:
+      PORT: "10000"
+      HF_HOME: /var/data/huggingface
+      U2NET_HOME: /var/data/u2net
+    volumes:
+      - model-cache:/var/data
+volumes:
+  model-cache:

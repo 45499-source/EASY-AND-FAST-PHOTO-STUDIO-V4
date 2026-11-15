@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EASY AND FAST PHOTO STUDIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="brandmark">G</span><div><b>EASY AND FAST PHOTO STUDIO</b><small>QUICK COLOR WORKFLOW</small></div></div><div class="top-actions"><span id="fileInfo">ยังไม่ได้เลือกรูปภาพ</span><button id="undoBtn" class="secondary" disabled title="ย้อนกลับ">↶</button><button id="redoBtn" class="secondary" disabled title="ทำซ้ำ">↷</button><button id="helpBtn" class="secondary">Help</button><button id="exportBtn" class="primary" disabled>Export ภาพ ↗</button></div></header>
+<main class="workspace">
+<aside class="sidebar">
+  <section class="upload-card"><div class="eyebrow">เริ่มต้นใช้งาน</div><label class="dropzone" id="dropzone"><input id="fileInput" type="file" accept="image/*,.dng,.cr2,.cr3,.nef,.arw,.raf,.rw2,.orf,.pef,.srw,.3fr,.fff,.iiq,.x3f,.rwl,.raw"><span class="upload-icon">↑</span><b>อัปโหลดรูปภาพ</b><small>ลากไฟล์มาวาง หรือคลิกเพื่อเลือก</small><small>JPG · PNG · WEBP · TIFF · RAW*</small></label><p class="hint">* RAW รองรับผ่านตัวถอดรหัส rawpy ตามรุ่นกล้อง</p></section>
+  <section><div class="section-head"><h3>LOOKS / LUT</h3><span class="eyebrow">คลิกเพื่อใช้</span></div><div class="preset-grid" id="presets">
+  <button class="preset active" data-preset="none"><span class="swatch neutral"></span><b>Original</b><small>ไม่ปรับสี</small></button>
+  <button class="preset" data-preset="warm"><span class="swatch warm"></span><b>Golden Hour</b><small>อุ่นละมุน</small></button>
+  <button class="preset" data-preset="cinema"><span class="swatch cinema"></span><b>Cinematic</b><small>ฟิล์มภาพยนตร์</small></button>
+  <button class="preset" data-preset="teal"><span class="swatch teal"></span><b>Teal & Orange</b><small>โทนหนัง</small></button>
+  <button class="preset" data-preset="matte"><span class="swatch matte"></span><b>Soft Matte</b><small>ด้านนุ่ม</small></button>
+  <button class="preset" data-preset="bw"><span class="swatch bw"></span><b>Monochrome</b><small>ขาวดำ</small></button>
+  <button class="preset" data-preset="vivid"><span class="swatch vivid"></span><b>Vivid Pop</b><small>สีสดใส</small></button>
+  <button class="preset" data-preset="moody"><span class="swatch moody"></span><b>Moody Green</b><small>เขียวหม่น</small></button>
+  </div></section>
+  <section class="templates"><div class="section-head"><h3>เทมเพลต</h3></div><div class="template-row">
+  <button data-template="portrait" class="template">PORTRAIT<small>ผิวสวย แสงนุ่ม</small></button>
+  <button data-template="travel" class="template">TRAVEL<small>วิวเด่น สีสด</small></button>
+  <button data-template="food" class="template">FOOD<small>อาหารน่ากิน</small></button>
+  <button data-template="night" class="template">NIGHT<small>กลางคืนคมเข้ม</small></button>
+  </div></section>
+  <section class="adjustments"><div class="section-head"><h3>ปรับแต่งภาพ</h3><button id="resetBtn" class="text-btn">รีเซ็ต</button></div>
+  <div id="sliders"></div></section>
+  <section class="layers-panel">
+    <div class="section-head"><h3>LAYERS / เลเยอร์</h3><div class="layer-actions"><button id="splitLayersBtn" class="text-btn">✦ แยกวัตถุ AI</button><button id="addBrushLayer" class="text-btn">+ Brush</button><button id="addLightLayer" class="text-btn">+ Light</button></div></div>
+    <div id="layerList" class="layer-list"><div class="layer-empty">อัปโหลดภาพเพื่อเริ่มสร้างเลเยอร์</div></div>
+    <div class="layer-footer"><button id="layerUp" class="secondary">↑</button><button id="layerDown" class="secondary">↓</button><button id="layerDelete" class="secondary">ลบเลเยอร์</button></div>
+  </section>
+  <section class="local-tools">
+    <div class="section-head"><h3>LOCAL EDITING</h3><button id="clearLocalBtn" class="text-btn">ล้างเฉพาะจุด</button></div>
+    <div class="tool-switch"><button class="tool-btn active" data-tool="brush">✎ Brush Mask</button><button class="tool-btn" data-tool="light">☼ Light Direction</button></div>
+    <p class="tool-help" id="toolHelp">ระบายบนภาพเพื่อเลือกพื้นที่ที่ต้องการปรับ</p>
+    <div class="ai-mask-box"><b>AI SUBJECT MASK</b><div class="ai-buttons"><button class="secondary" data-mask="person">คน</button><button class="secondary" data-mask="sky">ท้องฟ้า</button><button class="secondary" data-mask="background">ฉากหลัง</button></div><small>เลือกพื้นที่อัตโนมัติ แล้วนำไปใส่ใน Brush Layer ที่เลือก</small><small>ใช้ “แยกวัตถุ AI” เพื่อสร้างเลเยอร์ภาพโปร่งใสแยกคนและวัตถุจริง</small></div>
+    <div id="brushSettings" class="tool-settings">
+      <label>ขนาดแปรง <output id="brushSizeVal">45</output></label><input id="brushSize" type="range" min="5" max="250" value="45">
+      <label>ขอบฟุ้ง <output id="brushFeatherVal">65</output></label><input id="brushFeather" type="range" min="0" max="100" value="65">
+      <label>Exposure เฉพาะจุด <output id="localExposureVal">25</output></label><input id="localExposure" type="range" min="-100" max="100" value="25">
+      <label>Temperature เฉพาะจุด <output id="localTempVal">15</output></label><input id="localTemp" type="range" min="-100" max="100" value="15">
+      <label>Saturation เฉพาะจุด <output id="localSatVal">10</output></label><input id="localSat" type="range" min="-100" max="100" value="10">
+      <label>สีเคลือบ</label><input id="brushColor" type="color" value="#ffb86b">
+      <label>ความเข้มสี <output id="brushTintVal">20</output></label><input id="brushTint" type="range" min="0" max="100" value="20">
+      <button id="eraseBtn" class="secondary full-width">ยางลบ: ปิด</button>
+    </div>
+    <div id="lightSettings" class="tool-settings" hidden>
+      <label>สีของแสง</label><input id="lightColor" type="color" value="#ffd18a">
+      <label>ความแรง <output id="lightPowerVal">55</output></label><input id="lightPower" type="range" min="0" max="100" value="55">
+      <label>ความฟุ้ง / ความกว้าง <output id="lightSoftVal">55</output></label><input id="lightSoft" type="range" min="5" max="100" value="55">
+      <label>ระยะของแสง <output id="lightLengthVal">70</output></label><input id="lightLength" type="range" min="10" max="150" value="70">
+      <button id="clearLightBtn" class="secondary full-width">ลบเส้นแสง</button>
+      <p class="tool-help">ลากจากจุดกำเนิดแสงไปยังทิศทางที่ต้องการบนภาพ</p>
+    </div>
+  </section>
+</aside>
+<section class="canvas-area"><div class="canvas-toolbar"><div><b>PREVIEW</b><span id="dimensions">—</span></div><div class="toolbar-actions"><button id="compareBtn" class="secondary" disabled>กดค้างเพื่อดูภาพเดิม</button><select id="fitSelect"><option value="contain">พอดีหน้าจอ</option><option value="cover">เต็มพื้นที่</option></select></div></div>
+<div class="preview-stage" id="previewStage"><div class="empty-state" id="emptyState"><div class="empty-art">✳</div><h2>ภาพของคุณ พร้อมสำหรับการแต่งสี</h2><p>อัปโหลดภาพเพื่อเริ่มใช้งาน LUT และเครื่องมือปรับแสง</p><button class="primary" id="emptyUpload">เลือกภาพ</button></div><canvas id="previewCanvas" hidden></canvas><canvas id="interactionCanvas" hidden></canvas></div>
+<div class="bottom-note"><span>PRIVATE PROCESSING</span><span>ภาพถูกส่งไปประมวลผลชั่วคราว และไม่บันทึกถาวรโดยระบบ</span></div></section>
+</main>
+<div class="modal-backdrop" id="welcomeModal" hidden><div class="help-modal"><button class="modal-close" data-close-modal>×</button><div class="eyebrow">EASY AND FAST PHOTO STUDIO V4</div><h2 id="modalTitle">เริ่มต้นใช้งาน</h2><div id="modalBody"><p>1. อัปโหลดภาพจากแถบด้านซ้าย</p><p>2. ปรับสีด้วย Looks และแถบ Adjustments</p><p>3. เพิ่ม Brush หรือ Light Layer เพื่อแก้ไขเฉพาะจุด</p><p>4. ใช้ AI Subject Mask เพื่อเลือกคน ท้องฟ้า หรือฉากหลัง</p><p>5. ใช้ Undo / Redo เพื่อย้อนหรือคืนค่าการแก้ไข</p></div><div class="modal-actions"><button id="tutorialPrev" class="secondary">ก่อนหน้า</button><button id="tutorialNext" class="primary">ถัดไป</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script src="/static/app.js"></script>
+</body></html>
